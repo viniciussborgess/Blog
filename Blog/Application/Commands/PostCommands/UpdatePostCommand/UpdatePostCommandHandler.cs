@@ -1,8 +1,9 @@
 ﻿using Blog.Domain.Data.IRepositories;
+using MediatR;
 
 namespace Blog.API.Application.Commands.PostCommands.UpdatePostCommand;
 
-public class UpdatePostCommandHandler
+public class UpdatePostCommandHandler: IRequestHandler<UpdatePostCommand, bool>
 {
     private readonly IPostRepository _repository;
 
