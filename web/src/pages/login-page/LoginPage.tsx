@@ -1,56 +1,56 @@
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 function LoginPage() {
     const [nome, setNome] = useState('');
     const [password, setPassword] = useState('');
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [modalType, setModalType] = useState<'success' | 'error'>('success');
     const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-     console.log("Form submitted");
+        console.log("Form submitted");
 
-     const payload = {
-         nome: nome,
-         senha: password
-     };
+        const payload = {
+            nome: nome,
+            senha: password
+        };
 
-     try {
-         const response = await fetch("http://localhost:5079/api/v1/auth/login", {
-             method: "POST",
-             body: JSON.stringify(payload),
-             headers: { "Content-Type": "application/json" }
-         });
+        try {
+            const response = await fetch("http://localhost:5079/api/v1/auth/login", {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: { "Content-Type": "application/json" }
+            });
 
-         const textResponse = await response.text(); // Pega a resposta como texto
+            const textResponse = await response.text();
 
-         console.log("Resposta recebida:", textResponse); // Verifique o conteúdo da resposta
+            console.log("Resposta recebida:", textResponse);
 
-         // Tente analisar o texto como JSON
-         const json = JSON.parse(textResponse);
+            const json = JSON.parse(textResponse);
 
-         if (!response.ok) {
-             throw new Error(json.message || "Erro ao tentar logar. Verifique suas credenciais.");
-         }
+            if (!response.ok) {
+                throw new Error(json.message || "Erro ao tentar logar. Verifique suas credenciais.");
+            }
 
-         localStorage.setItem("token", json.token);
+            localStorage.setItem("token", json.token);
 
-         setModalMessage("Login realizado com sucesso!");
-         setModalType("success");
-         setShowModal(true);
+            setModalMessage("Login realizado com sucesso!");
+            setModalType("success");
+            setShowModal(true);
 
-         setTimeout(() => {
-             window.location.href = "/";
-         }, 1000);
-     } catch (err: any) {
-         console.error(err);
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1000);
+        } catch (err: any) {
+            console.error(err);
 
-         setModalMessage(err.message);
-         setModalType("error");
-         setShowModal(true);
-     }
+            setModalMessage(err.message);
+            setModalType("error");
+            setShowModal(true);
+        }
     };
 
 
@@ -59,7 +59,7 @@ function LoginPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-50 relative">
             <button
-                onClick={() => window.location.href = "/"} 
+                onClick={() => window.location.href = "/"}
                 className="cursor-pointer absolute right-4 top-4 bg-blue-800 text-white p-2 rounded-md hover:bg-blue-700"
             >
                 Voltar
@@ -84,7 +84,7 @@ function LoginPage() {
                         <label className="block text-lg font-medium text-gray-700">Senha</label>
                         <div className="relative">
                             <input
-                                type={showPassword ? "text" : "password"} 
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 name="password"
@@ -94,18 +94,15 @@ function LoginPage() {
                             />
                             <button
                                 type="button"
-                                onClick={() => setShowPassword(!showPassword)} 
+                                onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-2 top-2 text-gray-600"
                             >
                                 {showPassword ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12l-3-3m0 0l-3 3m3-3v12" />
-                                    </svg>
+                                    <Eye size={20}/>
                                 ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12l-3-3m0 0l-3 3m3-3v12" />
-                                    </svg>
+                                    <EyeOff size={20}/>
                                 )}
+
                             </button>
                         </div>
                     </div>
