@@ -78,7 +78,7 @@ const EditPost = () => {
                 </div>
             </header>
 
-            <div className="flex mt-20 justify-center">
+            <div className="flex mt-40 justify-center">
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full">
                     {loading ? (
                         <p className="text-center text-black font-bold text-2xl">Carregando...</p>
